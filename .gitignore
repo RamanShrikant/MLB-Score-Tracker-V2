@@ -1,0 +1,27 @@
+# dependencies
+node_modules/
+**/node_modules/
+
+# build outputs
+dist/
+build/
+.out/
+.next/
+.eslintcache
+.cache/
+coverage/
+
+# env & logs
+.env
+.env.*
+*.log
+npm-debug.log*
+
+# prisma local db (if any)
+prisma/*.db
+prisma/*.db-journal
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/

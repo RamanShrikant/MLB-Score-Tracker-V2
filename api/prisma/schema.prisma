@@ -1,0 +1,33 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Game {
+  gameId   String   @id
+  gameDate DateTime
+  status   String
+
+  homeId   Int
+  homeAbbr String
+  homeName String
+  homeRuns Int?
+
+  awayId   Int
+  awayAbbr String
+  awayName String
+  awayRuns Int?
+
+  updatedAt DateTime @updatedAt
+}
+
+model FavoriteTeam {
+  id        Int      @id @default(autoincrement())
+  teamId    Int      @unique
+  teamName  String
+  createdAt DateTime @default(now())
+}
