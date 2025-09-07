@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* Force black borders and consistent layout */
+.game-card {
+  display: grid;
+  grid-template-columns: 0.8fr 1.5fr 0.8fr; /* give the middle column extra space */
+  align-items: center;
+  border-width: 4px;
+  border-style: solid;
+/* no color here */
+
+  border-radius: 1rem;
+  padding: 0.75rem;
+  margin-bottom: 1rem; /* extra space below each card */
+
+}
+.team-col img {
+  width: 72px !important;
+  height: 72px !important;
+}
+/*space between the Favorites button and the first card */
+#games-root > .game-card:first-child {
+  margin-top: 16px;  /* bump this up if you want more */
+}
+.team-col p {
+  font-weight: 700 !important; /* 700 = bold */
+}
+/* Force highlight for favourite games */
+.game-card.fav {
+  border-color: #f59e0b !important;   /* Tailwind's yellow-500 */
+  background: #fef9c3 !important;     /* Tailwind's yellow-50 */
+  box-shadow: 0 0 0 2px #facc15 inset; /* ring-yellow-400 look */
+}
+/* Add margin under the Choose favourite teams button */
+.mx-auto.max-w-md > button {
+  margin-bottom: 20px; /* push the dropdown down */
+}
+
+/* Add extra top margin for the dropdown box */
+.mx-auto.max-w-md > div {
+  margin-top: 20px !important; /* force it further apart */
+}
+/* Hover lift for cards */
+.game-card{
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  transform: translateY(0);
+  will-change: transform;
+  cursor: pointer;
+}
+.game-card:hover,
+.game-card:focus-within{
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.15);
+  border-color: #F5C84B; /* your yellow */
+}
+
+/* Respect reduced-motion users */
+@media (prefers-reduced-motion: reduce){
+  .game-card{ transition: none !important; transform: none !important; }
+}
+
