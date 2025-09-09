@@ -18,7 +18,7 @@ const lastIngest = new Map();
 async function ingestDate(dateStr){
   const now = Date.now();
   if (now - (lastIngest.get(dateStr)||0) < 60_000) return; // throttle
-  const url = `https://statsapi.mlb.com/api/v1/schedule?sportId=1&date=${dateStr}&hydrate=linescore,status,teams`;
+  const url = `https://statsapi.mlb.com/api/v1/schedule?sportId=1&date=${dateStr}&hydrate=linescore,status,teams&t=${Date.now()}`;
   const r = await fetch(url);
   if(!r.ok) throw new Error(`MLB ${r.status}`);
   const j = await r.json();
@@ -57,6 +57,13 @@ app.get("/games", async (req,res)=>{
     const start = new Date(`${dateStr}T00:00:00Z`);
     const end = new Date(start.getTime()+24*60*60*1000);
     const rows = await db.game.findMany({ where:{gameDate:{gte:start,lt:end}}, orderBy:{gameDate:"asc"} });
+    
+  res.set({
+  "Cache-Control": "no-store, no-cache, must-revalidate",
+  "Pragma": "no-cache",
+  "Expires": "0"
+  });
+
     res.json({games:rows});
   }catch(e){ console.error(e); res.status(500).json({error:"server_error"}); }
 });
